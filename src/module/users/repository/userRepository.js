@@ -7,13 +7,13 @@ export class UserRepository {
         const userId = randomUUID();
         const { username, email, password } = datas;
 
-        const createUser = await postgresSql `INSERT into users(user_id, name, email, password) VALUES(${userId}, ${username}, ${email}, ${password}) returning user_id, name, email, password, createdat, teams`;
+        const createUser = await postgresSql `INSERT into users(user_id, username, email, password) VALUES(${userId}, ${username}, ${email}, ${password}) returning user_id, username, email, password, createdat, teams`;
 
         return createUser;
     }
 
     async findUserByUserName(username) {
-       const findUserByUserName = await postgresSql `SELECT name from users WHERE name = ${ username }`;
+       const findUserByUserName = await postgresSql `SELECT username from users WHERE username = ${ username }`;
 
        const queryResult = findUserByUserName.count === 1 ? true : false;
        return queryResult;
