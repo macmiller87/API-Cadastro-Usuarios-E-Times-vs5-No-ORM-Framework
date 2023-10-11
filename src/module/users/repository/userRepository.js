@@ -26,11 +26,26 @@ export class UserRepository {
         return queryResult;   
     }
 
+    async findUserById(user_id) {
+        const findUserById = await postgresSql `SELECT user_id from users WHERE user_id = ${ user_id }`;
+
+        const queryResult = findUserById.count === 0 ? false : true;
+        return queryResult;   
+    }
+
     async getUser(user_id) {
-        const findUserById = await postgresSql `SELECT * from users WHERE user_id = ${ user_id }`;
+        const findUserById = await postgresSql `SELECT * FROM users WHERE user_id = ${ user_id }`;
 
         const queryResult = findUserById.count === 0 ? false : findUserById;
         return queryResult;   
+    }
+
+    async updateUserField(user_id, data) {
+        
+        const { password } = data;
+
+        const updateUserField = await postgresSql `UPDATE users SET password = ${ password } WHERE user_id = ${ user_id } returning *`; 
+        return updateUserField;
     }
     
 }
