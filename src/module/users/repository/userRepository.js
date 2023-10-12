@@ -7,27 +7,27 @@ export class UserRepository {
         const userId = randomUUID();
         const { username, email, password } = datas;
 
-        const createUser = await postgresSql `INSERT into users(user_id, username, email, password) VALUES(${userId}, ${username}, ${email}, ${password}) returning *`;
+        const createUser = await postgresSql `INSERT INTO users(user_id, username, email, password) VALUES(${userId}, ${username}, ${email}, ${password}) returning *`;
 
         return createUser;
     }
 
     async findUserByUserName(username) {
-       const findUserByUserName = await postgresSql `SELECT username from users WHERE username = ${ username }`;
+       const findUserByUserName = await postgresSql `SELECT username FROM users WHERE username = ${ username }`;
 
        const queryResult = findUserByUserName.count === 0 ? false : true;
        return queryResult;
     }
 
     async findUserByEmail(email) {
-        const findUserByEmail = await postgresSql `SELECT email from users WHERE email = ${ email }`;
+        const findUserByEmail = await postgresSql `SELECT email FROM users WHERE email = ${ email }`;
 
         const queryResult = findUserByEmail.count === 0 ? false : true;
         return queryResult;   
     }
 
     async findUserById(user_id) {
-        const findUserById = await postgresSql `SELECT user_id from users WHERE user_id = ${ user_id }`;
+        const findUserById = await postgresSql `SELECT user_id FROM users WHERE user_id = ${ user_id }`;
 
         const queryResult = findUserById.count === 0 ? false : true;
         return queryResult;   
@@ -48,4 +48,7 @@ export class UserRepository {
         return updateUserField;
     }
     
+    async deleteUser(user_id) {
+        await postgresSql `DELETE FROM users WHERE user_id = ${ user_id }`;
+    }
 }
