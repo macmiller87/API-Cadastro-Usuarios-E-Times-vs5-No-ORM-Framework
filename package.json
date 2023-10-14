@@ -6,12 +6,10 @@
   "author": "macmiller87 <macamagolf@gmail.com>",
   "license": "MIT",
   "type": "module",
-  "engines": {
-    "node": "18.16.0"
-  },
   "scripts": {
     "dev:deploy": "node src/server.js",
     "dev:end": "dotenv -e .env.dev node src/server.js",
+    "dev": "node --watch src/server.js",
     "dev:debug": "node --inspect src/server.js",
     "create:tables": "node src/database/tables-deploy.js"
   },
