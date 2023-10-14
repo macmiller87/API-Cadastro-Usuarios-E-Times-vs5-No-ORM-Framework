@@ -13,10 +13,16 @@ export class TeamRepository {
     }
 
     async findTeamByTeamName(user_id, teamname) {
-
         const findTeamByTeamName = await postgresSql `SELECT (user_id, teamname) FROM teams WHERE user_id = ${ user_id } AND teamname = ${ teamname }`;
 
         const queryResult = findTeamByTeamName.count === 0 ? false : true;
+        return queryResult;   
+    }
+
+    async getTeam(team_id) {
+        const getTeam = await postgresSql `SELECT * FROM teams WHERE team_id = ${ team_id }`;
+
+        const queryResult = getTeam.count === 0 ? false : getTeam;
         return queryResult;   
     }
 }
