@@ -7,7 +7,7 @@ export class UserRepository {
         const userId = randomUUID();
         const { username, email, password } = datas;
 
-        const createUser = await postgresSql `INSERT INTO users(user_id, username, email, password) VALUES(${userId}, ${username}, ${email}, ${password}) returning *`;
+        const createUser = await postgresSql `INSERT INTO users(user_id, username, email, password) VALUES(${userId}, ${username}, ${email}, ${password}) RETURNING *`;
 
         return createUser;
     }
@@ -40,11 +40,17 @@ export class UserRepository {
         return queryResult;   
     }
 
+    async getUserAndTeams(user_id) {
+        const findUserById = await postgresSql `SELECT * FROM teams WHERE user_id = ${ user_id }`;
+
+        const queryResult = findUserById.count === 0 ? false : findUserById;
+        return queryResult;   
+    }
+
     async updateUserField(user_id, data) {
-        
         const { password } = data;
 
-        const updateUserField = await postgresSql `UPDATE users SET password = ${ password } WHERE user_id = ${ user_id } returning *`; 
+        const updateUserField = await postgresSql `UPDATE users SET password = ${ password } WHERE user_id = ${ user_id } RETURNING *`; 
         return updateUserField;
     }
     
