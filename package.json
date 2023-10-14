@@ -7,7 +7,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev:deploy": "node --watch src/server.js",
+    "dev:deploy": "node src/server.js",
     "dev:end": "dotenv -e .env.dev node src/server.js",
     "dev:debug": "node --inspect src/server.js",
     "create:tables": "node src/database/tables-deploy.js"
