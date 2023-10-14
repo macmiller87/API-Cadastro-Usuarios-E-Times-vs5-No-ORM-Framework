@@ -25,4 +25,15 @@ export class TeamRepository {
         const queryResult = getTeam.count === 0 ? false : getTeam;
         return queryResult;   
     }
+
+    async findTeamById(team_id) {
+        const findTeamById = await postgresSql `SELECT team_id FROM teams WHERE team_id = ${ team_id }`;
+
+        const queryResult = findTeamById.count === 0 ? false : true;
+        return queryResult;   
+    }
+
+    async deleteTeam(team_id) {
+        await postgresSql `DELETE FROM teams WHERE team_id = ${ team_id }`;
+    }
 }
